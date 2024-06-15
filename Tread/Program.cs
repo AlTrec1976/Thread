@@ -41,19 +41,19 @@ public class Program
         
     }
 
-    public static T Exampel<T>(object num)
+    public static T Exampel<T>(object state)
     {
         var rand = new Random();
         for (int i = 0; i < 40; i++)
         {
             //Console.Write(workThreads + " ");
             Thread.Sleep(100);
-            Console.WriteLine(num);
+            Console.WriteLine(state);
             
         }
         //Console.WriteLine(threadPoolWorker.Wait());
 
-        return (T)num;
+        return (T)state;
     }
 
     private static void WriteChar(object obj)

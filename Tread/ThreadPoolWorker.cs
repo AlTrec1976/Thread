@@ -13,9 +13,9 @@ public class ThreadPoolWorker<T>
     public bool IsComplete { get; private set; } = false;
     public T FuncOut { get; private set; }
 
-    public void Start(object num)
+    public void Start(object state)
     {
-        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), num);
+        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), state);
     }
 
     public T Wait()
