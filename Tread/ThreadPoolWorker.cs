@@ -21,20 +21,22 @@ public class ThreadPoolWorker<T>
     public T Wait()
     {
         Console.WriteLine($"Wait start in {Thread.CurrentThread.ManagedThreadId}");
+        
         while (!IsComplete)
         {
             Thread.Sleep(150);
         }
+        
         return FuncOut;
     }
 
-    private void Execute(object num)
+    private void Execute(object state)
     {
         try
         {
             Console.WriteLine($"Execute start in {Thread.CurrentThread.ManagedThreadId}");
-            //_action.Invoke(state);
-            FuncOut = _func.Invoke(num);
+
+            FuncOut = _func.Invoke(state);
             
             Success = true;
         }
