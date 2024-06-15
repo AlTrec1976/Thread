@@ -24,7 +24,6 @@ public class Program
 
     private static T Exampel<T>(object state)
     {
-        var rand = new Random();
         for (int i = 0; i < 40; i++)
         {
             Thread.Sleep(100);
