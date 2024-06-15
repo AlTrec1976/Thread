@@ -2,7 +2,6 @@
 
 public class Program
 {
-       static ThreadPoolWorker threadPoolWorker = new ThreadPoolWorker(Exampel);
     private static void Main(string[] args)
     {
         Console.WriteLine($"Method Main Thread ID - {Thread.CurrentThread.ManagedThreadId}");
@@ -12,8 +11,8 @@ public class Program
         */
 
         var rand = new Random();
-        //threadPoolWorker.Start(rand.Next(1, 10));
-        threadPoolWorker.Start('*');
+        ThreadPoolWorker<int> threadPoolWorker = new ThreadPoolWorker<int>(Exampel<int>);
+        threadPoolWorker.Start(50);
 
 
         for (int i = 0; i < 40; i++)
@@ -42,7 +41,7 @@ public class Program
         
     }
 
-    public static int Exampel(object num)
+    public static T Exampel<T>(object num)
     {
         var rand = new Random();
         for (int i = 0; i < 40; i++)
@@ -54,7 +53,7 @@ public class Program
         }
         //Console.WriteLine(threadPoolWorker.Wait());
 
-        return (int)num;
+        return (T)num;
     }
 
     private static void WriteChar(object obj)
