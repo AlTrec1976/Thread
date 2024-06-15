@@ -1,35 +1,31 @@
 ﻿namespace Tread;
 
-public class ThreadPoolWorker
+public class ThreadPoolWorker<T>
 {
-    //private readonly Action<object> _action;
-    private readonly Func<object, int> _func;
+    private readonly Func<object, T> _func;
     
-    public ThreadPoolWorker(Func<object, int> funk)
+    public ThreadPoolWorker(Func<object, T> funk)
     {
-        //_action = action ?? throw new ArgumentNullException();
         _func = funk ?? throw new ArgumentNullException();
     }
 
     public bool Success { get; private set; } = false;
     public bool IsComplete { get; private set; } = false;
-    public int FuncOut { get; private set; } = 0;
+    public T FuncOut { get; private set; }
 
     public void Start(object num)
     {
-        var funcIn = int.TryParse(num.ToString(), out int fIn); 
-        
-        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), funcIn ? fIn : num);
+        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), num);
     }
 
-    public string Wait()
+    public T Wait()
     {
         Console.WriteLine($"Wait start in {Thread.CurrentThread.ManagedThreadId}");
         while (!IsComplete)
         {
             Thread.Sleep(150);
         }
-        return $"Wait is finisched {OutPut(FuncOut)}";
+        return FuncOut;
     }
 
     private void Execute(object num)
@@ -50,12 +46,5 @@ public class ThreadPoolWorker
         {
             IsComplete = true;
         }
-        //return (int)num + rand.Next(100, 1000);
-    }
-
-    private int OutPut(int num)
-    {
-        var rand = new Random();
-        return num + rand.Next(10, 30);
     }
 }
