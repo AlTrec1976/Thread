@@ -1,7 +1,4 @@
-﻿using System.Collections.Concurrent;
-using Tread;
-
-namespace ConsoleApp12;
+﻿namespace Tread;
 
 public class Program
 {
@@ -15,7 +12,8 @@ public class Program
         */
 
         var rand = new Random();
-        threadPoolWorker.Start(rand.Next(1, 10));
+        //threadPoolWorker.Start(rand.Next(1, 10));
+        threadPoolWorker.Start('*');
 
 
         for (int i = 0; i < 40; i++)
@@ -51,7 +49,7 @@ public class Program
         {
             //Console.Write(workThreads + " ");
             Thread.Sleep(100);
-            Console.WriteLine((int)num);
+            Console.WriteLine(num);
             
         }
         //Console.WriteLine(threadPoolWorker.Wait());

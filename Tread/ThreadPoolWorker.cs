@@ -2,7 +2,6 @@
 
 public class ThreadPoolWorker
 {
-    private int f;
     //private readonly Action<object> _action;
     private readonly Func<object, int> _func;
     
@@ -14,10 +13,13 @@ public class ThreadPoolWorker
 
     public bool Success { get; private set; } = false;
     public bool IsComplete { get; private set; } = false;
+    public int FuncOut { get; private set; } = 0;
 
     public void Start(object num)
     {
-        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), OutPut((int)num));
+        var funcIn = int.TryParse(num.ToString(), out int fIn); 
+        
+        ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), funcIn ? fIn : num);
     }
 
     public string Wait()
@@ -27,7 +29,7 @@ public class ThreadPoolWorker
         {
             Thread.Sleep(150);
         }
-        return $"Wait is finisched {OutPut(f)}";
+        return $"Wait is finisched {OutPut(FuncOut)}";
     }
 
     private void Execute(object num)
@@ -36,7 +38,7 @@ public class ThreadPoolWorker
         {
             Console.WriteLine($"Execute start in {Thread.CurrentThread.ManagedThreadId}");
             //_action.Invoke(state);
-            f = _func.Invoke(num);
+            FuncOut = _func.Invoke(num);
             
             Success = true;
         }
