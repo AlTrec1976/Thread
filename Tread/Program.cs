@@ -19,6 +19,9 @@ public class Program
             Thread.Sleep(100);
         }
 
+        Console.WriteLine();
+        Console.WriteLine(threadPoolWorker.ThreadOut);
+        Console.WriteLine();
         Console.WriteLine(threadPoolWorker.Wait());
     }
 
@@ -26,8 +29,8 @@ public class Program
     {
         for (int i = 0; i < 40; i++)
         {
-            Thread.Sleep(100);
-            Console.WriteLine(state);
+            Thread.Sleep(150);
+            Console.Write(state);
         }
 
         return (T)state;

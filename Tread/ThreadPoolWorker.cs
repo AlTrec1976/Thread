@@ -3,6 +3,7 @@
 public class ThreadPoolWorker<T>
 {
     private readonly Func<object, T> _func;
+    private T result;
     
     public ThreadPoolWorker(Func<object, T> funk)
     {
@@ -12,7 +13,20 @@ public class ThreadPoolWorker<T>
     public bool Success { get; private set; } = false;
     public bool IsComplete { get; private set; } = false;
     public Exception Exception { get; private set; } = null;
-    public T FuncOut { get; private set; }
+
+    public T ThreadOut
+    {
+        get
+        {
+            while (!IsComplete)
+            {
+                Thread.Sleep(100);
+            }
+            Console.WriteLine($"\nThread is finished in {Thread.CurrentThread.ManagedThreadId}");
+
+            return Success && Exception == null ? result : throw Exception;
+        }
+    }
 
     public void Start(object state)
     {
@@ -33,7 +47,9 @@ public class ThreadPoolWorker<T>
             throw Exception;
         }
         
-        return FuncOut;
+        Console.WriteLine($"Wait finish in {Thread.CurrentThread.ManagedThreadId}");
+        
+        return result;
     }
 
     private void Execute(object state)
@@ -42,7 +58,7 @@ public class ThreadPoolWorker<T>
         {
             Console.WriteLine($"Execute start in {Thread.CurrentThread.ManagedThreadId}");
 
-            FuncOut = _func.Invoke(state);
+            result = _func.Invoke(state);
             
             Success = true;
         }
