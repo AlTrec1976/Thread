@@ -11,6 +11,7 @@ public class ThreadPoolWorker<T>
 
     public bool Success { get; private set; } = false;
     public bool IsComplete { get; private set; } = false;
+    public Exception Exception { get; private set; } = null;
     public T FuncOut { get; private set; }
 
     public void Start(object state)
@@ -25,6 +26,11 @@ public class ThreadPoolWorker<T>
         while (!IsComplete)
         {
             Thread.Sleep(150);
+        }
+
+        if (Exception != null)
+        {
+            throw Exception;
         }
         
         return FuncOut;
@@ -42,6 +48,7 @@ public class ThreadPoolWorker<T>
         }
         catch (Exception ex)
         {
+            Exception = ex;
             Success = false;
         }
         finally
