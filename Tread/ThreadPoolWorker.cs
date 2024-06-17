@@ -18,6 +18,7 @@ public class ThreadPoolWorker<T>
     {
         get
         {
+            Console.WriteLine($"\nThread is started in {Thread.CurrentThread.ManagedThreadId}");
             while (!IsComplete)
             {
                 Thread.Sleep(100);
@@ -35,7 +36,7 @@ public class ThreadPoolWorker<T>
 
     public T Wait()
     {
-        Console.WriteLine($"Wait start in {Thread.CurrentThread.ManagedThreadId}");
+        Console.WriteLine($"\nWait start in {Thread.CurrentThread.ManagedThreadId}");
         
         while (!IsComplete)
         {
@@ -47,7 +48,7 @@ public class ThreadPoolWorker<T>
             throw Exception;
         }
         
-        Console.WriteLine($"Wait finish in {Thread.CurrentThread.ManagedThreadId}");
+        Console.WriteLine($"\nWait finish in {Thread.CurrentThread.ManagedThreadId}");
         
         return result;
     }
