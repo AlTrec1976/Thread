@@ -19,8 +19,7 @@ public class Program
             Thread.Sleep(100);
         }
 
-        Console.WriteLine(threadPoolWorker.Wait());
-        Console.WriteLine(threadPoolWorker.ThreadOut);
+        Console.WriteLine("Output from thread: {0}", threadPoolWorker.ThreadOut);
     }
 
     private static T Exampel<T>(object state)
