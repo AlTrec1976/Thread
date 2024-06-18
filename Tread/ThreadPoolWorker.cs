@@ -19,10 +19,12 @@ public class ThreadPoolWorker<T>
         get
         {
             Console.WriteLine($"\nThread is started in {Thread.CurrentThread.ManagedThreadId}");
+            
             while (!IsComplete)
             {
                 Thread.Sleep(100);
             }
+            
             Console.WriteLine($"\nThread is finished in {Thread.CurrentThread.ManagedThreadId}");
 
             return Success && Exception == null ? result : throw Exception;
@@ -32,25 +34,6 @@ public class ThreadPoolWorker<T>
     public void Start(object state)
     {
         ThreadPool.QueueUserWorkItem(new WaitCallback(Execute), state);
-    }
-
-    public T Wait()
-    {
-        Console.WriteLine($"\nWait start in {Thread.CurrentThread.ManagedThreadId}");
-        
-        while (!IsComplete)
-        {
-            Thread.Sleep(150);
-        }
-
-        if (Exception != null)
-        {
-            throw Exception;
-        }
-        
-        Console.WriteLine($"\nWait finish in {Thread.CurrentThread.ManagedThreadId}");
-        
-        return result;
     }
 
     private void Execute(object state)
